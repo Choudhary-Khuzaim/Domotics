@@ -230,6 +230,65 @@ class DeviceCard extends StatelessWidget {
             ),
           ],
         );
+
+      case DeviceType.camera:
+        final cam = device as SmartCamera;
+        return Row(
+          children: [
+            Icon(Icons.videocam_rounded, size: 14, color: _getAccentColor()),
+            const SizedBox(width: 6),
+            Text(
+              cam.isNightVision ? 'Night Vision' : '1080p Live',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: _getAccentColor(),
+              ),
+            ),
+          ],
+        );
+
+      case DeviceType.fan:
+        final fan = device as SmartFan;
+        return Row(
+          children: [
+            Icon(Icons.air_rounded, size: 14, color: _getAccentColor()),
+            const SizedBox(width: 6),
+            Text(
+              'Speed ${fan.speed}',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: _getAccentColor(),
+              ),
+            ),
+          ],
+        );
+
+      case DeviceType.speaker:
+        final speaker = device as SmartSpeaker;
+        return Row(
+          children: [
+            Icon(
+              speaker.isPlaying ? Icons.music_note_rounded : Icons.pause_rounded,
+              size: 14,
+              color: _getAccentColor(),
+            ),
+            const SizedBox(width: 6),
+            Expanded(
+              child: Text(
+                speaker.isPlaying ? speaker.currentTrack : 'Paused',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: _getAccentColor(),
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        );
     }
   }
 
@@ -261,6 +320,12 @@ class DeviceCard extends StatelessWidget {
         return AppColors.accentGreen;
       case DeviceType.tv:
         return AppColors.neonIndigo;
+      case DeviceType.camera:
+        return AppColors.accentRose;
+      case DeviceType.fan:
+        return AppColors.electricCyan;
+      case DeviceType.speaker:
+        return AppColors.neonIndigo;
     }
   }
 
@@ -276,6 +341,13 @@ class DeviceCard extends StatelessWidget {
         return lock.isLocked ? Icons.lock_rounded : Icons.lock_open_rounded;
       case DeviceType.tv:
         return Icons.tv_rounded;
+      case DeviceType.camera:
+        return Icons.videocam_rounded;
+      case DeviceType.fan:
+        return Icons.air_rounded;
+      case DeviceType.speaker:
+        return Icons.speaker_group_rounded;
     }
   }
 }
+

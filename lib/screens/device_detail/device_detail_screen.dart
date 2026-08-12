@@ -7,6 +7,9 @@ import '../../widgets/animated_toggle.dart';
 import '../../widgets/glass_card.dart';
 import 'widgets/schedule_picker.dart';
 import 'widgets/color_picker_wheel.dart';
+import 'widgets/camera_control_widget.dart';
+import 'widgets/fan_control_widget.dart';
+import 'widgets/speaker_control_widget.dart';
 
 /// Deep-dive control screen for an individual smart device.
 class DeviceDetailScreen extends StatelessWidget {
@@ -225,7 +228,7 @@ class DeviceDetailScreen extends StatelessWidget {
                     children: [
                       Text(
                         '${ac.temperature}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 56,
                           fontWeight: FontWeight.w700,
                           color: AppColors.electricCyan,
@@ -409,6 +412,18 @@ class DeviceDetailScreen extends StatelessWidget {
             ),
           ],
         );
+
+      case DeviceType.camera:
+        final camera = device as SmartCamera;
+        return CameraControlWidget(camera: camera, provider: provider);
+
+      case DeviceType.fan:
+        final fan = device as SmartFan;
+        return FanControlWidget(fan: fan, provider: provider);
+
+      case DeviceType.speaker:
+        final speaker = device as SmartSpeaker;
+        return SpeakerControlWidget(speaker: speaker, provider: provider);
     }
   }
 
@@ -464,6 +479,13 @@ class DeviceDetailScreen extends StatelessWidget {
         return AppColors.accentGreen;
       case DeviceType.tv:
         return AppColors.neonIndigo;
+      case DeviceType.camera:
+        return AppColors.accentRose;
+      case DeviceType.fan:
+        return AppColors.electricCyan;
+      case DeviceType.speaker:
+        return AppColors.neonIndigo;
     }
   }
 }
+

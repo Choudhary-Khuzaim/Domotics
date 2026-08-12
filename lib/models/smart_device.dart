@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Types of smart devices supported in the app.
-enum DeviceType { light, ac, lock, tv }
+enum DeviceType { light, ac, lock, tv, camera, fan, speaker }
 
 /// Base model for all smart home devices.
 class SmartDevice {
@@ -92,3 +92,64 @@ class SmartTV extends SmartDevice {
          icon: Icons.tv,
        );
 }
+
+/// Smart Security Camera with pan/tilt & night vision.
+class SmartCamera extends SmartDevice {
+  bool isNightVision;
+  bool isMotionDetected;
+  int panAngle; // -90 to 90 degrees
+
+  SmartCamera({
+    required super.id,
+    required super.name,
+    required super.room,
+    super.isActive = true,
+    this.isNightVision = false,
+    this.isMotionDetected = false,
+    this.panAngle = 0,
+  }) : super(
+         type: DeviceType.camera,
+         icon: Icons.videocam_outlined,
+       );
+}
+
+/// Smart Fan with speed levels and oscillation.
+class SmartFan extends SmartDevice {
+  int speed; // 1 to 5
+  bool isOscillating;
+
+  SmartFan({
+    required super.id,
+    required super.name,
+    required super.room,
+    super.isActive = false,
+    this.speed = 3,
+    this.isOscillating = true,
+  }) : super(
+         type: DeviceType.fan,
+         icon: Icons.air_rounded,
+       );
+}
+
+/// Smart Speaker with music playback controls.
+class SmartSpeaker extends SmartDevice {
+  String currentTrack;
+  String artist;
+  bool isPlaying;
+  double volume; // 0.0 – 1.0
+
+  SmartSpeaker({
+    required super.id,
+    required super.name,
+    required super.room,
+    super.isActive = false,
+    this.currentTrack = 'Blinding Lights',
+    this.artist = 'The Weeknd',
+    this.isPlaying = false,
+    this.volume = 0.65,
+  }) : super(
+         type: DeviceType.speaker,
+         icon: Icons.speaker_group_outlined,
+       );
+}
+

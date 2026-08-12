@@ -6,6 +6,9 @@ import '../../screens/device_detail/device_detail_screen.dart';
 import 'widgets/greeting_header.dart';
 import 'widgets/room_tabs.dart';
 import 'widgets/device_card.dart';
+import 'widgets/quick_scene_bar.dart';
+import 'widgets/master_controls_card.dart';
+import 'widgets/air_quality_card.dart';
 
 /// Main dashboard / home screen displaying device cards by room.
 class DashboardScreen extends StatefulWidget {
@@ -32,7 +35,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: GreetingHeader(),
           ),
 
-          // Active devices count
+          const SliverToBoxAdapter(child: SizedBox(height: 12)),
+
+          // Indoor Air Quality Banner
+          const SliverToBoxAdapter(
+            child: AirQualityCard(),
+          ),
+
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
+          // Quick Scene Bar
+          const SliverToBoxAdapter(
+            child: QuickSceneBar(),
+          ),
+
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
+          // Master Action Quick Controls
+          const SliverToBoxAdapter(
+            child: MasterControlsCard(),
+          ),
+
+          // Active devices count & My Home section header
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
@@ -97,6 +121,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
             ),
           ),
+
 
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
 

@@ -127,7 +127,7 @@ class BleDeviceTile extends StatelessWidget {
           onConnect,
         );
       case BleConnectionState.connecting:
-        return SizedBox(
+        return const SizedBox(
           width: 80,
           height: 34,
           child: Center(
@@ -136,7 +136,7 @@ class BleDeviceTile extends StatelessWidget {
               height: 18,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation(AppColors.electricCyan),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.electricCyan),
               ),
             ),
           ),
@@ -172,12 +172,12 @@ class BleDeviceTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             color: AppColors.accentGreen.withOpacity(0.12),
           ),
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.check_circle, size: 14, color: AppColors.accentGreen),
-              const SizedBox(width: 4),
-              const Text(
+              Icon(Icons.check_circle, size: 14, color: AppColors.accentGreen),
+              SizedBox(width: 4),
+              Text(
                 'Paired',
                 style: TextStyle(
                   fontSize: 12,

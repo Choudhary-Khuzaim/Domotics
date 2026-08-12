@@ -15,9 +15,11 @@ class CustomBottomNavBar extends StatelessWidget {
 
   static const List<_NavItem> _items = [
     _NavItem(icon: Icons.dashboard_rounded, label: 'Home'),
+    _NavItem(icon: Icons.auto_awesome_rounded, label: 'Scenes'),
     _NavItem(icon: Icons.bluetooth_searching_rounded, label: 'Scanner'),
     _NavItem(icon: Icons.analytics_rounded, label: 'Analytics'),
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +88,7 @@ class _NavBarButton extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           color: isSelected

@@ -37,7 +37,7 @@ class _BreakdownChartState extends State<BreakdownChart> {
         children: [
           Row(
             children: [
-              Icon(Icons.pie_chart_rounded, size: 18, color: AppColors.neonIndigo),
+              const Icon(Icons.pie_chart_rounded, size: 18, color: AppColors.neonIndigo),
               const SizedBox(width: 6),
               Text(
                 'Consumption Breakdown',

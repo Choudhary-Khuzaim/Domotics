@@ -97,7 +97,7 @@ class EnergyProvider extends ChangeNotifier {
     EnergyDataPoint(label: 'Dec', kWh: 560),
   ];
 
-  static final List<DeviceConsumption> _breakdown = [
+  static const List<DeviceConsumption> _breakdown = [
     DeviceConsumption(
       category: 'HVAC',
       percentage: 45,

@@ -5,6 +5,7 @@ import 'widgets/time_filter.dart';
 import 'widgets/usage_chart.dart';
 import 'widgets/breakdown_chart.dart';
 import 'widgets/savings_tip_card.dart';
+import 'widgets/cost_estimator_card.dart';
 
 /// Energy analytics screen with charts and eco-tips.
 class AnalyticsScreen extends StatelessWidget {
@@ -48,6 +49,13 @@ class AnalyticsScreen extends StatelessWidget {
             ),
           ),
 
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
+          // Cost Estimator Card
+          const SliverToBoxAdapter(
+            child: CostEstimatorCard(),
+          ),
+
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
 
           // Line chart
@@ -78,3 +86,4 @@ class AnalyticsScreen extends StatelessWidget {
     );
   }
 }
+

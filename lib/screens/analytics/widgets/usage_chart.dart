@@ -34,7 +34,7 @@ class UsageChart extends StatelessWidget {
             padding: const EdgeInsets.only(left: 12, bottom: 16),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.bolt_rounded,
                   size: 18,
                   color: AppColors.electricCyan,
@@ -49,7 +49,7 @@ class UsageChart extends StatelessWidget {
                 const Spacer(),
                 Text(
                   '${data.fold<double>(0, (s, d) => s + d.kWh).toStringAsFixed(1)} kWh',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: AppColors.electricCyan,
@@ -74,13 +74,13 @@ class UsageChart extends StatelessWidget {
                   ),
                 ),
                 titlesData: FlTitlesData(
-                  leftTitles: AxisTitles(
+                  leftTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
-                  rightTitles: AxisTitles(
+                  rightTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
-                  topTitles: AxisTitles(
+                  topTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
                   bottomTitles: AxisTitles(
@@ -122,7 +122,7 @@ class UsageChart extends StatelessWidget {
                       return spots.map((spot) {
                         return LineTooltipItem(
                           '${spot.y.toStringAsFixed(1)} kWh',
-                          TextStyle(
+                          const TextStyle(
                             color: AppColors.electricCyan,
                             fontWeight: FontWeight.w600,
                             fontSize: 12,

@@ -7,7 +7,10 @@ import 'providers/device_provider.dart';
 import 'providers/ble_scan_provider.dart';
 import 'providers/energy_provider.dart';
 import 'providers/theme_provider.dart';
+import 'providers/scene_provider.dart';
+import 'providers/notification_provider.dart';
 import 'screens/dashboard/dashboard_screen.dart';
+import 'screens/scenes/scenes_screen.dart';
 import 'screens/ble_scanner/ble_scanner_screen.dart';
 import 'screens/analytics/analytics_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
@@ -34,6 +37,8 @@ class DomoticsApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DeviceProvider()),
         ChangeNotifierProvider(create: (_) => BleScanProvider()),
         ChangeNotifierProvider(create: (_) => EnergyProvider()),
+        ChangeNotifierProvider(create: (_) => SceneProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
@@ -51,7 +56,7 @@ class DomoticsApp extends StatelessWidget {
   }
 }
 
-/// Root scaffold with bottom navigation managing three main screens.
+/// Root scaffold with bottom navigation managing four main screens.
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
 
@@ -64,9 +69,11 @@ class _AppShellState extends State<AppShell> {
 
   static const List<Widget> _screens = [
     DashboardScreen(),
+    ScenesScreen(),
     BleScannerScreen(),
     AnalyticsScreen(),
   ];
+
 
   @override
   Widget build(BuildContext context) {

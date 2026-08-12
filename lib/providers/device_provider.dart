@@ -23,17 +23,36 @@ class DeviceProvider extends ChangeNotifier {
     ),
     SmartTV(
       id: 'tv_1',
-      name: 'Samsung TV',
+      name: 'Samsung 4K TV',
       room: 'Living Room',
       isActive: true,
       volume: 0.45,
     ),
     SmartLock(
       id: 'lock_1',
-      name: 'Front Door',
+      name: 'Front Door Lock',
       room: 'Living Room',
       isActive: true,
       isLocked: true,
+    ),
+    SmartSpeaker(
+      id: 'speaker_1',
+      name: 'Living Room Sonos',
+      room: 'Living Room',
+      isActive: true,
+      currentTrack: 'Midnight City',
+      artist: 'M83',
+      isPlaying: true,
+      volume: 0.6,
+    ),
+    SmartCamera(
+      id: 'cam_1',
+      name: 'Living Room Cam',
+      room: 'Living Room',
+      isActive: true,
+      isNightVision: false,
+      isMotionDetected: false,
+      panAngle: 0,
     ),
 
     // ─── Bedroom ─────────────────────────────────────────────────
@@ -47,11 +66,19 @@ class DeviceProvider extends ChangeNotifier {
     ),
     SmartAC(
       id: 'ac_2',
-      name: 'Room AC',
+      name: 'Bedroom AC',
       room: 'Bedroom',
       isActive: true,
       temperature: 25,
       mode: ACMode.cool,
+    ),
+    SmartFan(
+      id: 'fan_1',
+      name: 'Ceiling Fan',
+      room: 'Bedroom',
+      isActive: true,
+      speed: 3,
+      isOscillating: true,
     ),
     SmartTV(
       id: 'tv_2',
@@ -95,11 +122,25 @@ class DeviceProvider extends ChangeNotifier {
       isActive: true,
       isLocked: true,
     ),
+    SmartCamera(
+      id: 'cam_2',
+      name: 'Garden Security Cam',
+      room: 'Outdoor',
+      isActive: true,
+      isNightVision: true,
+      isMotionDetected: true,
+      panAngle: 15,
+    ),
   ];
 
   List<SmartDevice> get devices => _devices;
 
   int get activeDeviceCount => _devices.where((d) => d.isActive).length;
+
+  /// Call notifyListeners manually after batch operations.
+  void refresh() {
+    notifyListeners();
+  }
 
   /// Get devices filtered by room name. "All Rooms" returns everything.
   List<SmartDevice> getDevicesByRoom(String room) {
@@ -114,6 +155,23 @@ class DeviceProvider extends ChangeNotifier {
     } catch (_) {
       return null;
     }
+  }
+
+  /// Master switch: Turn off all lights in home.
+  void turnOffAllLights() {
+    for (var d in _devices.whereType<SmartLight>()) {
+      d.isActive = false;
+    }
+    notifyListeners();
+  }
+
+  /// Master switch: Lock all door locks in home.
+  void lockAllDoors() {
+    for (var d in _devices.whereType<SmartLock>()) {
+      d.isActive = true;
+      d.isLocked = true;
+    }
+    notifyListeners();
   }
 
   /// Toggle a device on/off.
@@ -178,4 +236,50 @@ class DeviceProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  /// Update Fan speed (1-5).
+  void updateFanSpeed(String id, int speed) {
+    final device = getDeviceById(id);
+    if (device is SmartFan) {
+      device.speed = speed.clamp(1, 5);
+      notifyListeners();
+    }
+  }
+
+  /// Toggle Fan oscillation.
+  void toggleFanOscillation(String id) {
+    final device = getDeviceById(id);
+    if (device is SmartFan) {
+      device.isOscillating = !device.isOscillating;
+      notifyListeners();
+    }
+  }
+
+  /// Toggle Camera Night Vision mode.
+  void toggleCameraNightVision(String id) {
+    final device = getDeviceById(id);
+    if (device is SmartCamera) {
+      device.isNightVision = !device.isNightVision;
+      notifyListeners();
+    }
+  }
+
+  /// Adjust Camera Pan Angle (-90 to +90).
+  void adjustCameraPan(String id, int delta) {
+    final device = getDeviceById(id);
+    if (device is SmartCamera) {
+      device.panAngle = (device.panAngle + delta).clamp(-90, 90);
+      notifyListeners();
+    }
+  }
+
+  /// Toggle Speaker play/pause.
+  void toggleSpeakerPlay(String id) {
+    final device = getDeviceById(id);
+    if (device is SmartSpeaker) {
+      device.isPlaying = !device.isPlaying;
+      notifyListeners();
+    }
+  }
+
 }

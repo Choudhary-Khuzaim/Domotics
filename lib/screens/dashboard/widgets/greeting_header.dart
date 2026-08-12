@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../app_theme.dart';
 import '../../../providers/theme_provider.dart';
-import 'package:provider/provider.dart';
+import '../../../providers/notification_provider.dart';
+import '../../../widgets/notifications_sheet.dart';
 
-/// Greeting header with time-aware message, profile icon, and weather widget.
+/// Greeting header with time-aware message, profile icon, notification bell & weather widget.
 class GreetingHeader extends StatelessWidget {
   const GreetingHeader({super.key});
 
@@ -17,6 +19,8 @@ class GreetingHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
+    final notificationProvider = context.watch<NotificationProvider>();
+    final unreadCount = notificationProvider.unreadCount;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Padding(
@@ -76,6 +80,60 @@ class GreetingHeader extends StatelessWidget {
             ),
           ),
 
+          // Notification Bell
+          GestureDetector(
+            onTap: () {
+              notificationProvider.markAllAsRead();
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (_) => const NotificationsSheet(),
+              );
+            },
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isDark
+                    ? AppColors.darkSurface
+                    : AppColors.lightSurfaceVariant,
+                border: Border.all(
+                  color: isDark
+                      ? AppColors.glassBorder
+                      : AppColors.glassBorderLight,
+                ),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(
+                    Icons.notifications_none_rounded,
+                    size: 20,
+                    color: isDark
+                        ? AppColors.darkTextSecondary
+                        : AppColors.lightTextSecondary,
+                  ),
+                  if (unreadCount > 0)
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.accentRose,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+
           // Theme toggle
           GestureDetector(
             onTap: themeProvider.toggleTheme,
@@ -102,11 +160,11 @@ class GreetingHeader extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
 
           // Weather widget
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               color: isDark
@@ -121,12 +179,12 @@ class GreetingHeader extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
+                const Icon(
                   Icons.wb_sunny_rounded,
                   size: 18,
                   color: AppColors.accentAmber,
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 4),
                 Text(
                   '24°C',
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -141,3 +199,4 @@ class GreetingHeader extends StatelessWidget {
     );
   }
 }
+
