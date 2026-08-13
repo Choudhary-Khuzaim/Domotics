@@ -12,7 +12,7 @@ class SchedulePicker extends StatefulWidget {
 class _SchedulePickerState extends State<SchedulePicker> {
   TimeOfDay _onTime = const TimeOfDay(hour: 7, minute: 0);
   TimeOfDay _offTime = const TimeOfDay(hour: 23, minute: 0);
-  final Set<int> _selectedDays = {1, 2, 3, 4, 5}; // Mon-Fri by default
+  final Set<int> _selectedDays = {0, 1, 2, 3, 4}; // Mon-Fri by default (0-indexed)
   final List<_Schedule> _savedSchedules = [];
 
   static const List<String> _dayLabels = [

@@ -79,9 +79,9 @@ class _AppShellState extends State<AppShell> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: _screens[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _screens,
       ),
       extendBody: true,
       bottomNavigationBar: CustomBottomNavBar(

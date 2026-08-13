@@ -76,7 +76,7 @@ class SceneProvider extends ChangeNotifier {
 
     switch (sceneId) {
       case 'good_night':
-        // Turn off lights, lock doors, set AC temp
+        // Turn off lights, TV, speaker & fans, lock doors, set cozy AC temp
         for (var device in deviceProvider.devices) {
           if (device is SmartLight) {
             device.isActive = false;
@@ -88,6 +88,11 @@ class SceneProvider extends ChangeNotifier {
             device.temperature = 22;
             device.mode = ACMode.cool;
           } else if (device is SmartTV) {
+            device.isActive = false;
+          } else if (device is SmartSpeaker) {
+            device.isActive = false;
+            device.isPlaying = false;
+          } else if (device is SmartFan) {
             device.isActive = false;
           }
         }

@@ -12,7 +12,9 @@ class UsageChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final maxY = data.map((d) => d.kWh).reduce((a, b) => a > b ? a : b);
+    final double maxY = data.isEmpty
+        ? 10.0
+        : data.map((d) => d.kWh).reduce((a, b) => a > b ? a : b);
     final ceiledMax = (maxY * 1.2).ceilToDouble();
 
     return Container(

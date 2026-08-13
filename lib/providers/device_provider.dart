@@ -228,10 +228,13 @@ class DeviceProvider extends ChangeNotifier {
     }
   }
 
-  /// Update TV volume.
+  /// Update TV or Speaker volume.
   void updateVolume(String id, double volume) {
     final device = getDeviceById(id);
     if (device is SmartTV) {
+      device.volume = volume.clamp(0.0, 1.0);
+      notifyListeners();
+    } else if (device is SmartSpeaker) {
       device.volume = volume.clamp(0.0, 1.0);
       notifyListeners();
     }

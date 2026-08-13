@@ -54,12 +54,14 @@ class _PairingModalState extends State<PairingModal> {
 
     final success = await widget.onPair(_pin);
 
+    if (!mounted) return;
+
     setState(() {
       _isPairing = false;
       _pairResult = success;
     });
 
-    if (success && mounted) {
+    if (success) {
       await Future.delayed(const Duration(milliseconds: 800));
       if (mounted) Navigator.of(context).pop(true);
     }
