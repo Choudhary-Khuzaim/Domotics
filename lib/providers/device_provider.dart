@@ -285,4 +285,15 @@ class DeviceProvider extends ChangeNotifier {
     }
   }
 
+  /// Add a new device to the home.
+  void addDevice(SmartDevice device) {
+    _devices.add(device);
+    notifyListeners();
+  }
+
+  /// Remove a device by its ID.
+  void removeDevice(String id) {
+    _devices.removeWhere((d) => d.id == id);
+    notifyListeners();
+  }
 }

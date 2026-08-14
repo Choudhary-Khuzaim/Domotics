@@ -9,10 +9,15 @@ import 'providers/energy_provider.dart';
 import 'providers/theme_provider.dart';
 import 'providers/scene_provider.dart';
 import 'providers/notification_provider.dart';
+import 'providers/settings_provider.dart';
+import 'providers/room_provider.dart';
+import 'providers/routine_provider.dart';
+import 'screens/splash/splash_screen.dart';
 import 'screens/dashboard/dashboard_screen.dart';
 import 'screens/scenes/scenes_screen.dart';
-import 'screens/ble_scanner/ble_scanner_screen.dart';
+import 'screens/routines/routines_screen.dart';
 import 'screens/analytics/analytics_screen.dart';
+import 'screens/settings/settings_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
 
 void main() {
@@ -39,6 +44,9 @@ class DomoticsApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => EnergyProvider()),
         ChangeNotifierProvider(create: (_) => SceneProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
+        ChangeNotifierProvider(create: (_) => RoomProvider()),
+        ChangeNotifierProvider(create: (_) => RoutineProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
@@ -48,7 +56,7 @@ class DomoticsApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeProvider.themeMode,
-            home: const AppShell(),
+            home: SplashScreen(destination: const AppShell()),
           );
         },
       ),
@@ -56,7 +64,7 @@ class DomoticsApp extends StatelessWidget {
   }
 }
 
-/// Root scaffold with bottom navigation managing four main screens.
+/// Root scaffold with bottom navigation managing five main screens.
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
 
@@ -70,8 +78,9 @@ class _AppShellState extends State<AppShell> {
   static const List<Widget> _screens = [
     DashboardScreen(),
     ScenesScreen(),
-    BleScannerScreen(),
+    RoutinesScreen(),
     AnalyticsScreen(),
+    SettingsScreen(),
   ];
 
 

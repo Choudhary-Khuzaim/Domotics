@@ -16,8 +16,9 @@ class CustomBottomNavBar extends StatelessWidget {
   static const List<_NavItem> _items = [
     _NavItem(icon: Icons.dashboard_rounded, label: 'Home'),
     _NavItem(icon: Icons.auto_awesome_rounded, label: 'Scenes'),
-    _NavItem(icon: Icons.bluetooth_searching_rounded, label: 'Scanner'),
+    _NavItem(icon: Icons.schedule_rounded, label: 'Routines'),
     _NavItem(icon: Icons.analytics_rounded, label: 'Analytics'),
+    _NavItem(icon: Icons.settings_rounded, label: 'Settings'),
   ];
 
 
@@ -88,7 +89,7 @@ class _NavBarButton extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           color: isSelected
@@ -102,17 +103,17 @@ class _NavBarButton extends StatelessWidget {
               duration: const Duration(milliseconds: 250),
               child: Icon(
                 item.icon,
-                size: 24,
+                size: 22,
                 color: isSelected
                     ? AppColors.electricCyan
                     : Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 3),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 250),
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 10,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                 color: isSelected
                     ? AppColors.electricCyan

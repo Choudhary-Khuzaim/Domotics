@@ -4,6 +4,7 @@ import '../../../app_theme.dart';
 import '../../../providers/theme_provider.dart';
 import '../../../providers/notification_provider.dart';
 import '../../../widgets/notifications_sheet.dart';
+import 'weather_detail_sheet.dart';
 
 /// Greeting header with time-aware message, profile icon, notification bell & weather widget.
 class GreetingHeader extends StatelessWidget {
@@ -162,36 +163,46 @@ class GreetingHeader extends StatelessWidget {
           ),
           const SizedBox(width: 8),
 
-          // Weather widget
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              color: isDark
-                  ? AppColors.darkSurface
-                  : AppColors.lightSurfaceVariant,
-              border: Border.all(
+          // Weather widget — tappable
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (_) => const WeatherDetailSheet(),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
                 color: isDark
-                    ? AppColors.glassBorder
-                    : AppColors.glassBorderLight,
+                    ? AppColors.darkSurface
+                    : AppColors.lightSurfaceVariant,
+                border: Border.all(
+                  color: isDark
+                      ? AppColors.glassBorder
+                      : AppColors.glassBorderLight,
+                ),
               ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.wb_sunny_rounded,
-                  size: 18,
-                  color: AppColors.accentAmber,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  '24°C',
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    fontSize: 13,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.wb_sunny_rounded,
+                    size: 18,
+                    color: AppColors.accentAmber,
                   ),
-                ),
-              ],
+                  const SizedBox(width: 4),
+                  Text(
+                    '24°C',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -199,4 +210,3 @@ class GreetingHeader extends StatelessWidget {
     );
   }
 }
-

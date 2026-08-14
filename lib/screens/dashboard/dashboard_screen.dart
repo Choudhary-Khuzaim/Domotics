@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../app_theme.dart';
 import '../../providers/device_provider.dart';
 import '../../screens/device_detail/device_detail_screen.dart';
+import '../../screens/add_device/add_device_screen.dart';
 import 'widgets/greeting_header.dart';
 import 'widgets/room_tabs.dart';
 import 'widgets/device_card.dart';
@@ -27,7 +28,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final devices = deviceProvider.getDevicesByRoom(_selectedRoom);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return SafeArea(
+    return Stack(
+      children: [
+        SafeArea(
       child: CustomScrollView(
         slivers: [
           // Greeting Header
@@ -189,6 +192,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
       ),
+    ),
+
+        // FAB to add devices
+        Positioned(
+          right: 20,
+          bottom: 96,
+          child: FloatingActionButton(
+            heroTag: 'add_device_fab',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const AddDeviceScreen(),
+                ),
+              );
+            },
+            backgroundColor: AppColors.electricCyan,
+            elevation: 8,
+            child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
+          ),
+        ),
+      ],
     );
   }
 }
