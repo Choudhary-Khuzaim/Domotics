@@ -11,7 +11,7 @@ class WeatherDetailSheet extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.55,
+      height: MediaQuery.of(context).size.height * 0.75,
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkBackground : AppColors.lightBackground,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
@@ -64,6 +64,9 @@ class WeatherDetailSheet extends StatelessWidget {
               children: [
                 // Current temp & condition
                 GlassCard(
+                  isActive: true,
+                  activeGlowColor: AppColors.accentAmber,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
                   child: Row(
                     children: [
                       Column(
@@ -76,7 +79,7 @@ class WeatherDetailSheet extends StatelessWidget {
                             child: const Text(
                               '24°C',
                               style: TextStyle(
-                                fontSize: 48,
+                                fontSize: 56,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
                               ),
@@ -87,26 +90,71 @@ class WeatherDetailSheet extends StatelessWidget {
                             'Partly Cloudy',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyMedium
-                                ?.copyWith(fontSize: 15),
+                                .titleMedium
+                                ?.copyWith(fontSize: 16),
                           ),
+                          const SizedBox(height: 2),
                           Text(
                             'Feels like 26°C',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13),
                           ),
                         ],
                       ),
                       const Spacer(),
-                      Icon(
-                        Icons.wb_cloudy_rounded,
-                        size: 64,
-                        color: AppColors.accentAmber.withOpacity(0.6),
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.accentAmber.withOpacity(0.4),
+                              blurRadius: 30,
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.wb_cloudy_rounded,
+                          size: 72,
+                          color: AppColors.accentAmber.withOpacity(0.9),
+                        ),
                       ),
                     ],
                   ),
                 ),
 
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
+
+                // Hourly forecast
+                Text(
+                  'HOURLY FORECAST',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                    color: isDark
+                        ? AppColors.darkTextMuted
+                        : AppColors.lightTextMuted,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  clipBehavior: Clip.none,
+                  child: Row(
+                    children: [
+                      _HourlyCard(time: 'Now', temp: '24°', icon: Icons.wb_cloudy_rounded, iconColor: AppColors.accentAmber, isActive: true),
+                      _HourlyCard(time: '2 PM', temp: '25°', icon: Icons.wb_sunny_rounded, iconColor: AppColors.accentAmber),
+                      _HourlyCard(time: '3 PM', temp: '26°', icon: Icons.wb_sunny_rounded, iconColor: AppColors.accentAmber),
+                      _HourlyCard(time: '4 PM', temp: '25°', icon: Icons.wb_cloudy_rounded, iconColor: AppColors.darkTextMuted),
+                      _HourlyCard(time: '5 PM', temp: '24°', icon: Icons.wb_cloudy_rounded, iconColor: AppColors.darkTextMuted),
+                      _HourlyCard(time: '6 PM', temp: '22°', icon: Icons.nights_stay_rounded, iconColor: AppColors.neonIndigo),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
 
                 // Conditions grid
                 Row(
@@ -148,6 +196,28 @@ class WeatherDetailSheet extends StatelessWidget {
                         label: 'Visibility',
                         value: '10 km',
                         color: AppColors.accentGreen,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ConditionCard(
+                        icon: Icons.air_rounded,
+                        label: 'AQI',
+                        value: '42 Good',
+                        color: AppColors.electricCyan,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _ConditionCard(
+                        icon: Icons.wb_twilight_rounded,
+                        label: 'Sunset',
+                        value: '6:45 PM',
+                        color: AppColors.accentRose,
                       ),
                     ),
                   ],
@@ -377,6 +447,66 @@ class _ForecastRow extends StatelessWidget {
                   ? AppColors.darkTextMuted
                   : AppColors.lightTextMuted,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HourlyCard extends StatelessWidget {
+  final String time;
+  final String temp;
+  final IconData icon;
+  final Color iconColor;
+  final bool isActive;
+
+  const _HourlyCard({
+    required this.time,
+    required this.temp,
+    required this.icon,
+    required this.iconColor,
+    this.isActive = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      margin: const EdgeInsets.only(right: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: BoxDecoration(
+        color: isActive 
+            ? AppColors.electricCyan.withOpacity(0.15)
+            : isDark 
+                ? AppColors.darkSurfaceVariant.withOpacity(0.3) 
+                : AppColors.lightSurfaceVariant.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isActive 
+              ? AppColors.electricCyan.withOpacity(0.5)
+              : isDark ? AppColors.glassBorder : AppColors.glassBorderLight,
+        ),
+      ),
+      child: Column(
+        children: [
+          Text(
+            time, 
+            style: TextStyle(
+              fontSize: 13, 
+              fontWeight: isActive ? FontWeight.w600 : FontWeight.w500, 
+              color: isActive ? AppColors.electricCyan : (isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary)
+            )
+          ),
+          const SizedBox(height: 12),
+          Icon(icon, color: iconColor, size: 28),
+          const SizedBox(height: 12),
+          Text(
+            temp, 
+            style: const TextStyle(
+              fontSize: 18, 
+              fontWeight: FontWeight.w700
+            )
           ),
         ],
       ),
