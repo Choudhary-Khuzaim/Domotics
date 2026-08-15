@@ -198,6 +198,29 @@ class DeviceDetailScreen extends StatelessWidget {
               currentColor: light.color,
               onColorChanged: (c) => provider.updateLightColor(deviceId, c),
             ),
+            const SizedBox(height: 28),
+
+            // Color Presets
+            Text(
+              'Color Presets',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 12),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                children: [
+                  _colorPreset(context, 'Warm', const Color(0xFFFFD700), provider, deviceId),
+                  _colorPreset(context, 'Cool', const Color(0xFFE2E8F0), provider, deviceId),
+                  _colorPreset(context, 'Relax', const Color(0xFFF43F5E), provider, deviceId),
+                  _colorPreset(context, 'Focus', const Color(0xFF06B6D4), provider, deviceId),
+                  _colorPreset(context, 'Movie', const Color(0xFF8B5CF6), provider, deviceId),
+                ],
+              ),
+            ),
           ],
         );
 
@@ -319,6 +342,27 @@ class DeviceDetailScreen extends StatelessWidget {
                   ),
                 );
               }).toList(),
+            ),
+            const SizedBox(height: 28),
+
+            // Quick Presets
+            Text(
+              'Quick Presets',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 12),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                children: [
+                  _acPreset(context, 'Eco', 26, provider, deviceId),
+                  _acPreset(context, 'Sleep', 24, provider, deviceId),
+                  _acPreset(context, 'Turbo', 18, provider, deviceId),
+                ],
+              ),
             ),
           ],
         );
@@ -486,6 +530,80 @@ class DeviceDetailScreen extends StatelessWidget {
       case DeviceType.speaker:
         return AppColors.neonIndigo;
     }
+  }
+
+  Widget _colorPreset(BuildContext context, String label, Color color, DeviceProvider provider, String deviceId) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return GestureDetector(
+      onTap: () => provider.updateLightColor(deviceId, color),
+      child: Container(
+        margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isDark ? AppColors.glassBorder : AppColors.glassBorderLight,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 16,
+              height: 16,
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(color: color.withOpacity(0.5), blurRadius: 4),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _acPreset(BuildContext context, String label, int temp, DeviceProvider provider, String deviceId) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return GestureDetector(
+      onTap: () => provider.updateTemperature(deviceId, temp),
+      child: Container(
+        margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isDark ? AppColors.glassBorder : AppColors.glassBorderLight,
+          ),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.thermostat_rounded, size: 16, color: AppColors.electricCyan),
+            const SizedBox(width: 6),
+            Text(
+              '$label ($temp°C)',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

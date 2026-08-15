@@ -54,15 +54,14 @@ class ColorPickerWheel extends StatelessWidget {
         const SizedBox(height: 16),
         Center(
           child: SizedBox(
-            width: 260,
-            height: 260,
+            width: 280,
             child: HueRingPicker(
               pickerColor: currentColor,
               onColorChanged: onColorChanged,
               enableAlpha: false,
               displayThumbColor: true,
-              colorPickerHeight: 200,
-              hueRingStrokeWidth: 24,
+              colorPickerHeight: 220,
+              hueRingStrokeWidth: 20,
             ),
           ),
         ),

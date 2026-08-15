@@ -174,6 +174,59 @@ class DeviceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Master switch: Activate Away Mode.
+  void activateAwayMode() {
+    for (var d in _devices) {
+      if (d is SmartLight || d is SmartTV || d is SmartSpeaker) {
+        d.isActive = false;
+      }
+      if (d is SmartLock) {
+        d.isActive = true;
+        d.isLocked = true;
+      }
+      if (d is SmartCamera) {
+        d.isActive = true;
+        d.isMotionDetected = true;
+      }
+    }
+    notifyListeners();
+  }
+
+  /// Master switch: Activate Night Mode.
+  void activateNightMode() {
+    for (var d in _devices) {
+      if (d is SmartLight || d is SmartTV || d is SmartSpeaker) {
+        d.isActive = false;
+      }
+      if (d is SmartLock) {
+        d.isActive = true;
+        d.isLocked = true;
+      }
+      if (d is SmartAC) {
+        d.isActive = true;
+        d.temperature = 24;
+      }
+    }
+    notifyListeners();
+  }
+
+  /// Master switch: Activate Party Mode.
+  void activatePartyMode() {
+    for (var d in _devices) {
+      if (d is SmartLight) {
+        d.isActive = true;
+        d.brightness = 1.0;
+        d.color = const Color(0xFFF43F5E); // Accent Rose
+      }
+      if (d is SmartSpeaker) {
+        d.isActive = true;
+        d.isPlaying = true;
+        d.volume = 0.9;
+      }
+    }
+    notifyListeners();
+  }
+
   /// Toggle a device on/off.
   void toggleDevice(String id) {
     final device = getDeviceById(id);
