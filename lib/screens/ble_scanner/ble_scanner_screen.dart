@@ -16,21 +16,37 @@ class BleScannerScreen extends StatelessWidget {
     final bleProvider = context.watch<BleScanProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          // Title
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Text(
-                'Discover Nearby Devices',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontSize: 24,
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            // Back button
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 20, 0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        color: isDark
+                            ? AppColors.darkTextPrimary
+                            : AppColors.lightTextPrimary,
+                      ),
+                    ),
+                    Text(
+                      'Discover Nearby Devices',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
 
           // Subtitle
           SliverToBoxAdapter(
@@ -222,9 +238,9 @@ class BleScannerScreen extends StatelessWidget {
               ),
             ),
 
-          // Bottom padding
           const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
+        ),
       ),
     );
   }

@@ -166,4 +166,16 @@ class SceneProvider extends ChangeNotifier {
     _scenes[sceneIndex].isExecuting = false;
     notifyListeners();
   }
+
+  /// Add a new custom scene.
+  void addScene(SmartScene scene) {
+    _scenes.add(scene);
+    notifyListeners();
+  }
+
+  /// Remove a scene by ID.
+  void removeScene(String sceneId) {
+    _scenes.removeWhere((s) => s.id == sceneId);
+    notifyListeners();
+  }
 }

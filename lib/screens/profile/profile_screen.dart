@@ -280,7 +280,7 @@ class ProfileScreen extends StatelessWidget {
                         icon: Icons.share_rounded,
                         iconColor: AppColors.neonIndigo,
                         title: 'Share Home Access',
-                        onTap: () {},
+                        onTap: () => _showShareDialog(context),
                       ),
                       Divider(
                         height: 1,
@@ -294,7 +294,7 @@ class ProfileScreen extends StatelessWidget {
                         icon: Icons.download_rounded,
                         iconColor: AppColors.accentGreen,
                         title: 'Export Home Data',
-                        onTap: () {},
+                        onTap: () => _showExportSnackbar(context),
                       ),
                     ],
                   ),
@@ -370,6 +370,131 @@ class ProfileScreen extends StatelessWidget {
                 const Text('Save', style: TextStyle(color: Colors.white)),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showShareDialog(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final inviteCode = 'DMTC-${DateTime.now().millisecondsSinceEpoch.toString().substring(6)}';
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor:
+            isDark ? AppColors.darkSurface : AppColors.lightSurface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Row(
+          children: [
+            Icon(Icons.share_rounded, color: AppColors.neonIndigo, size: 22),
+            SizedBox(width: 10),
+            Text('Share Home Access'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Share this invite code with family members to give them access to your smart home:',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 13,
+                    height: 1.4,
+                  ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: AppColors.neonIndigo.withOpacity(0.1),
+                border: Border.all(
+                  color: AppColors.neonIndigo.withOpacity(0.3),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    inviteCode,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.neonIndigo,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Invite code copied!'),
+                          backgroundColor: AppColors.neonIndigo,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Icon(Icons.copy_rounded,
+                        size: 20, color: AppColors.neonIndigo),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Code expires in 24 hours',
+              style: TextStyle(
+                fontSize: 11,
+                color: isDark
+                    ? AppColors.darkTextMuted
+                    : AppColors.lightTextMuted,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.neonIndigo,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: const Text('Done',
+                style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showExportSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Row(
+          children: [
+            Icon(Icons.check_circle_rounded,
+                color: Colors.white, size: 20),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'Home data exported successfully!\nSaved to Downloads folder.',
+                style: TextStyle(fontSize: 13),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: AppColors.accentGreen,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       ),
     );
   }

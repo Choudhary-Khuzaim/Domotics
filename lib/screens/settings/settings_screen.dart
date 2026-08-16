@@ -343,7 +343,7 @@ class SettingsScreen extends StatelessWidget {
                       iconColor: AppColors.electricCyan,
                       title: 'App Version',
                       subtitle: 'v${settings.appVersion}',
-                      onTap: () {},
+                      onTap: () => _showAppInfoDialog(context, settings),
                     ),
                     _divider(isDark),
                     _SettingsTile(
@@ -351,7 +351,7 @@ class SettingsScreen extends StatelessWidget {
                       iconColor: AppColors.neonIndigo,
                       title: 'Terms of Service',
                       subtitle: '',
-                      onTap: () {},
+                      onTap: () => _showLegalSheet(context, 'Terms of Service', _termsOfServiceText),
                     ),
                     _divider(isDark),
                     _SettingsTile(
@@ -359,7 +359,7 @@ class SettingsScreen extends StatelessWidget {
                       iconColor: AppColors.accentAmber,
                       title: 'Privacy Policy',
                       subtitle: '',
-                      onTap: () {},
+                      onTap: () => _showLegalSheet(context, 'Privacy Policy', _privacyPolicyText),
                     ),
                     _divider(isDark),
                     _SettingsTile(
@@ -367,7 +367,7 @@ class SettingsScreen extends StatelessWidget {
                       iconColor: AppColors.accentGreen,
                       title: 'Help & Support',
                       subtitle: '',
-                      onTap: () {},
+                      onTap: () => _showHelpSupportDialog(context),
                     ),
                   ],
                 ),
@@ -596,6 +596,452 @@ class SettingsScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.white)),
           ),
         ],
+      ),
+    );
+  }
+
+  // ─── About Section Dialogs ──────────────────────────────────────
+
+  static const String _termsOfServiceText = '''
+Terms of Service — Domotics Smart Home App
+Last Updated: August 2026
+
+1. ACCEPTANCE OF TERMS
+By accessing and using the Domotics application ("App"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.
+
+2. DESCRIPTION OF SERVICE
+Domotics provides a smart home automation interface that allows users to control, monitor, and manage connected smart devices within their home environment.
+
+3. USER ACCOUNTS
+You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.
+
+4. DEVICE COMPATIBILITY
+Domotics is designed to work with compatible smart home devices. We do not guarantee compatibility with all devices and are not responsible for any issues arising from incompatible hardware.
+
+5. DATA COLLECTION
+We collect usage data to improve the App experience. Please refer to our Privacy Policy for detailed information about data collection and usage.
+
+6. INTELLECTUAL PROPERTY
+All content, features, and functionality of the App are owned by Domotics and are protected by international copyright, trademark, and other intellectual property laws.
+
+7. LIMITATION OF LIABILITY
+Domotics shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the App.
+
+8. MODIFICATIONS
+We reserve the right to modify these terms at any time. Continued use of the App after modifications constitutes acceptance of the updated terms.
+
+9. GOVERNING LAW
+These terms shall be governed by and construed in accordance with applicable local laws.
+
+10. CONTACT
+For questions about these Terms, contact us at support@domotics.app.
+''';
+
+  static const String _privacyPolicyText = '''
+Privacy Policy — Domotics Smart Home App
+Last Updated: August 2026
+
+1. INFORMATION WE COLLECT
+• Device information (device type, model, operating system)
+• Usage data (features used, interaction patterns)
+• Smart home device data (device names, room assignments, usage schedules)
+• Account information (name, email address)
+
+2. HOW WE USE YOUR INFORMATION
+• To provide and maintain the App
+• To improve and personalize user experience
+• To send important notifications about your smart home
+• To analyze usage patterns for product improvement
+• To provide energy consumption analytics
+
+3. DATA STORAGE
+Your data is stored locally on your device. In future versions with cloud sync, data will be encrypted and stored on secure servers.
+
+4. DATA SHARING
+We do not sell, trade, or rent your personal information to third parties. We may share anonymized, aggregated data for analytical purposes.
+
+5. SECURITY
+We implement industry-standard security measures including encryption, biometric authentication support, and PIN lock features to protect your data.
+
+6. YOUR RIGHTS
+• Access your personal data
+• Request data deletion
+• Export your home configuration data
+• Opt out of non-essential notifications
+
+7. CHILDREN'S PRIVACY
+The App is not intended for children under 13. We do not knowingly collect personal information from children.
+
+8. COOKIES & TRACKING
+The App does not use cookies. We use minimal analytics to understand feature usage.
+
+9. CHANGES TO THIS POLICY
+We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy in the App.
+
+10. CONTACT US
+If you have questions about this Privacy Policy, contact us at privacy@domotics.app.
+''';
+
+  void _showAppInfoDialog(BuildContext context, SettingsProvider settings) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor:
+            isDark ? AppColors.darkSurface : AppColors.lightSurface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            Container(
+              width: 72,
+              height: 72,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: AppColors.primaryGradient,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.electricCyan.withOpacity(0.3),
+                    blurRadius: 20,
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.home_rounded,
+                color: Colors.white,
+                size: 36,
+              ),
+            ),
+            const SizedBox(height: 16),
+            ShaderMask(
+              shaderCallback: (bounds) =>
+                  AppColors.primaryGradient.createShader(bounds),
+              child: const Text(
+                'Domotics',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Smart Living, Simplified',
+              style: TextStyle(
+                fontSize: 13,
+                color: isDark
+                    ? AppColors.darkTextMuted
+                    : AppColors.lightTextMuted,
+              ),
+            ),
+            const SizedBox(height: 20),
+            _infoRow('Version', 'v${settings.appVersion}', isDark),
+            _infoRow('Build', '2026.08.16', isDark),
+            _infoRow('Platform', 'Flutter / Dart', isDark),
+            _infoRow('License', 'MIT License', isDark),
+            const SizedBox(height: 16),
+            Text(
+              '© 2026 Khuzaim. All rights reserved.',
+              style: TextStyle(
+                fontSize: 11,
+                color: isDark
+                    ? AppColors.darkTextMuted
+                    : AppColors.lightTextMuted,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          Center(
+            child: FilledButton(
+              onPressed: () => Navigator.pop(ctx),
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.electricCyan,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text('Close',
+                  style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _infoRow(String label, String value, bool isDark) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 13,
+              color: isDark
+                  ? AppColors.darkTextSecondary
+                  : AppColors.lightTextSecondary,
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLegalSheet(BuildContext context, String title, String content) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Container(
+        height: MediaQuery.of(context).size.height * 0.75,
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.darkBackground : AppColors.lightBackground,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 12),
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: isDark
+                    ? AppColors.darkSurfaceVariant
+                    : AppColors.lightSurfaceVariant,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Icon(
+                    title.contains('Terms')
+                        ? Icons.description_outlined
+                        : Icons.privacy_tip_outlined,
+                    color: title.contains('Terms')
+                        ? AppColors.neonIndigo
+                        : AppColors.accentAmber,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(height: 24),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+                child: Text(
+                  content,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 13,
+                    height: 1.6,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showHelpSupportDialog(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final faqs = [
+      {
+        'q': 'How do I add a new device?',
+        'a': 'Tap the + button on the Dashboard to start the Add Device wizard. Select device type, give it a name, and assign it to a room.',
+      },
+      {
+        'q': 'How do I create a scene?',
+        'a': 'Go to the Scenes tab and tap the + button. Name your scene, choose an icon and gradient, then save.',
+      },
+      {
+        'q': 'How do I set up a routine?',
+        'a': 'Navigate to the Routines tab and tap the + button. Set a time, select repeat days, and optionally link a scene.',
+      },
+      {
+        'q': 'How do I pair BLE devices?',
+        'a': 'Go to Settings → Connected Devices. Tap Start Scan, then connect to a discovered device and enter PIN 1234 to pair.',
+      },
+      {
+        'q': 'How do I change the energy rate?',
+        'a': 'Go to Settings → Preferences → Energy Rate. Enter your local electricity rate per kWh.',
+      },
+    ];
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.darkBackground : AppColors.lightBackground,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 12),
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: isDark
+                    ? AppColors.darkSurfaceVariant
+                    : AppColors.lightSurfaceVariant,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  const Icon(Icons.help_outline_rounded,
+                      color: AppColors.accentGreen),
+                  const SizedBox(width: 10),
+                  Text(
+                    'Help & Support',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(height: 24),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: [
+                  Text(
+                    'FREQUENTLY ASKED QUESTIONS',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.2,
+                      color: isDark
+                          ? AppColors.darkTextMuted
+                          : AppColors.lightTextMuted,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ...faqs.map((faq) => Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: isDark
+                          ? AppColors.darkSurface
+                          : AppColors.lightSurface,
+                      border: Border.all(
+                        color: isDark
+                            ? AppColors.glassBorder
+                            : AppColors.glassBorderLight,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.quiz_rounded,
+                                size: 18, color: AppColors.electricCyan),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                faq['q']!,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          faq['a']!,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: isDark
+                                ? AppColors.darkTextSecondary
+                                : AppColors.lightTextSecondary,
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      gradient: AppColors.primaryGradient,
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.email_rounded,
+                            color: Colors.white, size: 22),
+                        SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Need more help?',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Contact us at support@domotics.app',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
