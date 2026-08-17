@@ -56,7 +56,7 @@ class DomoticsApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeProvider.themeMode,
-            home: SplashScreen(destination: const AppShell()),
+            home: const SplashScreen(destination: AppShell()),
           );
         },
       ),

@@ -138,9 +138,9 @@ class WeatherDetailSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                SingleChildScrollView(
+                const SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   clipBehavior: Clip.none,
                   child: Row(
                     children: [
@@ -157,7 +157,7 @@ class WeatherDetailSheet extends StatelessWidget {
                 const SizedBox(height: 24),
 
                 // Conditions grid
-                Row(
+                const Row(
                   children: [
                     Expanded(
                       child: _ConditionCard(
@@ -167,7 +167,7 @@ class WeatherDetailSheet extends StatelessWidget {
                         color: AppColors.electricCyan,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: _ConditionCard(
                         icon: Icons.air_rounded,
@@ -179,7 +179,7 @@ class WeatherDetailSheet extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                Row(
+                const Row(
                   children: [
                     Expanded(
                       child: _ConditionCard(
@@ -189,7 +189,7 @@ class WeatherDetailSheet extends StatelessWidget {
                         color: AppColors.accentAmber,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: _ConditionCard(
                         icon: Icons.visibility_rounded,
@@ -201,7 +201,7 @@ class WeatherDetailSheet extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                Row(
+                const Row(
                   children: [
                     Expanded(
                       child: _ConditionCard(
@@ -211,7 +211,7 @@ class WeatherDetailSheet extends StatelessWidget {
                         color: AppColors.electricCyan,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: _ConditionCard(
                         icon: Icons.wb_twilight_rounded,
@@ -243,7 +243,7 @@ class WeatherDetailSheet extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   child: Column(
                     children: [
-                      _ForecastRow(
+                      const _ForecastRow(
                         day: 'Tomorrow',
                         icon: Icons.wb_sunny_rounded,
                         iconColor: AppColors.accentAmber,
@@ -260,7 +260,7 @@ class WeatherDetailSheet extends StatelessWidget {
                             ? AppColors.glassBorder
                             : AppColors.glassBorderLight,
                       ),
-                      _ForecastRow(
+                      const _ForecastRow(
                         day: 'Saturday',
                         icon: Icons.wb_cloudy_rounded,
                         iconColor: AppColors.darkTextMuted,
@@ -277,7 +277,7 @@ class WeatherDetailSheet extends StatelessWidget {
                             ? AppColors.glassBorder
                             : AppColors.glassBorderLight,
                       ),
-                      _ForecastRow(
+                      const _ForecastRow(
                         day: 'Sunday',
                         icon: Icons.thunderstorm_rounded,
                         iconColor: AppColors.neonIndigo,

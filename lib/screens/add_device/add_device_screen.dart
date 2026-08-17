@@ -127,43 +127,43 @@ class _AddDeviceScreenState extends State<AddDeviceScreen>
 
   Widget _buildTypeSelection(bool isDark) {
     final types = [
-      _DeviceTypeOption(
+      const _DeviceTypeOption(
         type: DeviceType.light,
         name: 'Smart Light',
         icon: Icons.lightbulb_outline,
         color: AppColors.accentAmber,
       ),
-      _DeviceTypeOption(
+      const _DeviceTypeOption(
         type: DeviceType.ac,
         name: 'Air Conditioner',
         icon: Icons.ac_unit,
         color: AppColors.electricCyan,
       ),
-      _DeviceTypeOption(
+      const _DeviceTypeOption(
         type: DeviceType.fan,
         name: 'Smart Fan',
         icon: Icons.air_rounded,
         color: AppColors.accentGreen,
       ),
-      _DeviceTypeOption(
+      const _DeviceTypeOption(
         type: DeviceType.lock,
         name: 'Smart Lock',
         icon: Icons.lock_outline,
         color: AppColors.accentRose,
       ),
-      _DeviceTypeOption(
+      const _DeviceTypeOption(
         type: DeviceType.tv,
         name: 'Smart TV',
         icon: Icons.tv,
         color: AppColors.neonIndigo,
       ),
-      _DeviceTypeOption(
+      const _DeviceTypeOption(
         type: DeviceType.camera,
         name: 'Security Camera',
         icon: Icons.videocam_outlined,
-        color: const Color(0xFF3B82F6),
+        color: Color(0xFF3B82F6),
       ),
-      _DeviceTypeOption(
+      const _DeviceTypeOption(
         type: DeviceType.speaker,
         name: 'Smart Speaker',
         icon: Icons.speaker_group_outlined,
