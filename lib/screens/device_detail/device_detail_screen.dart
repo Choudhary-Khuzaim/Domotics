@@ -5,11 +5,11 @@ import '../../models/smart_device.dart';
 import '../../providers/device_provider.dart';
 import '../../widgets/animated_toggle.dart';
 import '../../widgets/glass_card.dart';
-import 'widgets/schedule_picker.dart';
 import 'widgets/color_picker_wheel.dart';
 import 'widgets/camera_control_widget.dart';
 import 'widgets/fan_control_widget.dart';
 import 'widgets/speaker_control_widget.dart';
+import 'widgets/activity_timeline.dart';
 
 /// Deep-dive control screen for an individual smart device.
 class DeviceDetailScreen extends StatelessWidget {
@@ -62,6 +62,35 @@ class DeviceDetailScreen extends StatelessWidget {
                       value: device.isActive,
                       activeColor: _accentColor(device.type),
                       onChanged: (_) => provider.toggleDevice(deviceId),
+                    ),
+                    const SizedBox(width: 8),
+                    // Favorite button
+                    GestureDetector(
+                      onTap: () => provider.toggleFavorite(deviceId),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: device.isFavorite
+                              ? AppColors.accentAmber.withOpacity(0.15)
+                              : isDark
+                                  ? AppColors.darkSurface
+                                  : AppColors.lightSurfaceVariant,
+                        ),
+                        child: Icon(
+                          device.isFavorite
+                              ? Icons.star_rounded
+                              : Icons.star_outline_rounded,
+                          size: 20,
+                          color: device.isFavorite
+                              ? AppColors.accentAmber
+                              : isDark
+                                  ? AppColors.darkTextMuted
+                                  : AppColors.lightTextMuted,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -135,10 +164,41 @@ class DeviceDetailScreen extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-              // Schedule picker (for all devices)
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SchedulePicker(),
+              // Activity Timeline
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.history_rounded,
+                          size: 18,
+                          color: isDark
+                              ? AppColors.darkTextMuted
+                              : AppColors.lightTextMuted,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'RECENT ACTIVITY',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1.2,
+                            color: isDark
+                                ? AppColors.darkTextMuted
+                                : AppColors.lightTextMuted,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    ActivityTimeline(
+                      activities: provider.getDeviceActivities(deviceId),
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 40),

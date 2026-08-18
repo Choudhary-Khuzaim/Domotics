@@ -11,15 +11,18 @@ import '../../../widgets/glass_card.dart';
 class DeviceCard extends StatelessWidget {
   final SmartDevice device;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
 
-  const DeviceCard({super.key, required this.device, this.onTap});
+  const DeviceCard({super.key, required this.device, this.onTap, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
     final provider = context.read<DeviceProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return GlassCard(
+    return GestureDetector(
+      onLongPress: onLongPress,
+      child: GlassCard(
       isActive: device.isActive,
       activeGlowColor: _getAccentColor(),
       onTap: onTap,
@@ -90,6 +93,7 @@ class DeviceCard extends StatelessWidget {
           _buildInlineControl(context, provider),
         ],
       ),
+    ),
     );
   }
 

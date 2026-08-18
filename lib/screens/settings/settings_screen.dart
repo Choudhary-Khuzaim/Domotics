@@ -6,6 +6,7 @@ import '../../providers/theme_provider.dart';
 import '../../providers/device_provider.dart';
 import '../../providers/room_provider.dart';
 import '../../widgets/glass_card.dart';
+import '../../widgets/page_transitions.dart';
 import '../profile/profile_screen.dart';
 import '../rooms/rooms_screen.dart';
 import '../ble_scanner/ble_scanner_screen.dart';
@@ -53,8 +54,8 @@ class SettingsScreen extends StatelessWidget {
               child: GlassCard(
                 onTap: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (_) => const ProfileScreen()),
+                    SlideUpRoute(
+                        page: const ProfileScreen()),
                   );
                 },
                 child: Row(
@@ -164,8 +165,8 @@ class SettingsScreen extends StatelessWidget {
                           '${context.watch<RoomProvider>().rooms.length} rooms',
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (_) => const RoomsScreen()),
+                          SlideUpRoute(
+                              page: const RoomsScreen()),
                         );
                       },
                     ),
@@ -178,8 +179,8 @@ class SettingsScreen extends StatelessWidget {
                           '${context.watch<DeviceProvider>().devices.length} devices',
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (_) =>
+                          SlideUpRoute(
+                              page:
                                   const BleScannerScreen()),
                         );
                       },

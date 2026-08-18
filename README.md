@@ -71,6 +71,12 @@ The app simulates a fully functional smart home environment — from controlling
 | 📡 **BLE Scanner** | Simulated Bluetooth device discovery with radar animation |
 | 🔔 **Activity Center** | Real-time notification system with categorized alerts |
 | ⚡ **9 State Providers** | Clean, scalable Provider-based architecture |
+| 🔒 **Security Dashboard** | Real-time lock/camera/motion status with pulsing indicators |
+| ⭐ **Device Favorites** | Star devices for quick-access from dashboard |
+| 📜 **Activity Log** | Per-device event timeline with relative timestamps |
+| 🔍 **Device Search** | Instant search across all devices, rooms, and types |
+| ✨ **Premium Transitions** | Custom slide-up fade page transitions |
+| 🏠 **Home Status Card** | Real-time summary of lights, locks, cameras, temperature |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -87,8 +93,13 @@ The app simulates a fully functional smart home environment — from controlling
 ### 🎛️ Master Dashboard
 - Time-aware greeting with user profile avatar
 - Live weather widget with detailed weather sheet
+- **Home Status Card** — real-time summary: lights on, doors locked, cameras active, avg temperature
+- **Security Dashboard** — animated lock/camera/motion status with pulsing live indicator
 - Quick scene activation cards for instant automation
+- **Favorites Row** — horizontal scrollable quick-access to starred devices
 - Room-by-room device status overview with active device counts
+- **Device Search** — search any device by name, room, or type
+- **Delete Device** — long-press any device card to remove with confirmation dialog
 - Notification bell with unread count badge
 
 ### 💡 Comprehensive Device Control (7 Types)
@@ -154,6 +165,28 @@ The app simulates a fully functional smart home environment — from controlling
 ### 🚀 Splash Screen
 - Animated logo reveal with scale/fade transitions
 - Gradient background with smooth navigation to main app
+
+### ⭐ Device Favorites
+- Star/un-star any device from the device detail screen
+- Quick-access favorites row on dashboard with status dot indicators
+- Tappable chips navigate directly to device controls
+
+### 📜 Device Activity Log
+- Per-device event timeline on the device detail screen
+- Tracks all state changes: toggles, brightness, temperature, lock, color, speed, playback
+- Beautiful vertical timeline UI with colored dots, icons, and relative timestamps
+- Pre-populated demo activity entries for showcasing
+
+### 🔍 Quick Device Search
+- Search overlay accessible from dashboard "My Home" section
+- Real-time filtering by device name, room, or type
+- Each result shows device icon, name, room, and ON/OFF status badge
+- Tappable results navigate to device detail
+
+### ✨ Premium Page Transitions
+- Custom `SlideUpRoute` with slide-up + fade animation (350ms)
+- Applied to all navigation pushes: device detail, profile, rooms, BLE scanner
+- Smooth reverse animation on pop navigation
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -280,10 +313,11 @@ lib/
 │   ├── scene.dart           # SmartScene with gradient & accent colors
 │   ├── routine.dart         # Routine with time, days, scene linking
 │   ├── ble_device.dart      # BLE device with RSSI & connection state
-│   └── notification_model.dart # Typed notification entity
+│   ├── notification_model.dart # Typed notification entity
+│   └── device_activity.dart # Device activity log entry model
 │
 ├── providers/               # State management (9 providers)
-│   ├── device_provider.dart       # Device CRUD, toggle, brightness, temperature, volume
+│   ├── device_provider.dart       # Device CRUD, toggle, favorites, activity log
 │   ├── room_provider.dart         # Room CRUD with icon selection
 │   ├── scene_provider.dart        # Scene execution + custom scene CRUD
 │   ├── routine_provider.dart      # Routine scheduling & management
@@ -296,9 +330,11 @@ lib/
 ├── screens/                 # Feature screens (11 screen modules)
 │   ├── splash/              # Animated startup screen
 │   ├── dashboard/           # Main home hub
-│   │   └── widgets/         # GreetingHeader, QuickScenes, RoomDevices, WeatherSheet
+│   │   └── widgets/         # GreetingHeader, QuickScenes, RoomDevices, WeatherSheet,
+│   │                        # SecurityStatusCard, HomeStatusCard, FavoritesRow
 │   ├── device_detail/       # Per-device deep controls
-│   │   └── widgets/         # ColorPickerWheel, FanControl, CameraControl, SpeakerControl, SchedulePicker
+│   │   └── widgets/         # ColorPickerWheel, FanControl, CameraControl, SpeakerControl,
+│   │                        # SchedulePicker, ActivityTimeline
 │   ├── scenes/              # Scene management with create/delete
 │   ├── routines/            # Routine scheduling
 │   ├── analytics/           # Energy charts & breakdown
@@ -317,7 +353,8 @@ lib/
 │   ├── glass_card.dart      # Glassmorphism card with backdrop blur
 │   ├── animated_toggle.dart # Custom toggle switch
 │   ├── bottom_nav_bar.dart  # Custom bottom navigation bar
-│   └── notifications_sheet.dart # Activity center bottom sheet
+│   ├── notifications_sheet.dart # Activity center bottom sheet
+│   └── page_transitions.dart # Custom SlideUpRoute page transition
 │
 ├── app_theme.dart           # Centralized design system (colors, typography, themes)
 └── main.dart                # App entry point with MultiProvider setup

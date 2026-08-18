@@ -11,6 +11,7 @@ class SmartDevice {
   final DeviceType type;
   final IconData icon;
   bool isActive;
+  bool isFavorite;
 
   SmartDevice({
     required this.id,
@@ -19,6 +20,7 @@ class SmartDevice {
     required this.type,
     required this.icon,
     this.isActive = false,
+    this.isFavorite = false,
   });
 }
 
@@ -32,6 +34,7 @@ class SmartLight extends SmartDevice {
     required super.name,
     required super.room,
     super.isActive,
+    super.isFavorite,
     this.brightness = 0.7,
     this.color = const Color(0xFFFFD700),
   }) : super(
@@ -53,6 +56,7 @@ class SmartAC extends SmartDevice {
     required super.name,
     required super.room,
     super.isActive,
+    super.isFavorite,
     this.temperature = 24,
     this.mode = ACMode.cool,
   }) : super(
@@ -70,6 +74,7 @@ class SmartLock extends SmartDevice {
     required super.name,
     required super.room,
     super.isActive,
+    super.isFavorite,
     this.isLocked = true,
   }) : super(
          type: DeviceType.lock,
@@ -86,6 +91,7 @@ class SmartTV extends SmartDevice {
     required super.name,
     required super.room,
     super.isActive,
+    super.isFavorite,
     this.volume = 0.5,
   }) : super(
          type: DeviceType.tv,
@@ -104,6 +110,7 @@ class SmartCamera extends SmartDevice {
     required super.name,
     required super.room,
     super.isActive = true,
+    super.isFavorite,
     this.isNightVision = false,
     this.isMotionDetected = false,
     this.panAngle = 0,
@@ -123,6 +130,7 @@ class SmartFan extends SmartDevice {
     required super.name,
     required super.room,
     super.isActive = false,
+    super.isFavorite,
     this.speed = 3,
     this.isOscillating = true,
   }) : super(
@@ -143,6 +151,7 @@ class SmartSpeaker extends SmartDevice {
     required super.name,
     required super.room,
     super.isActive = false,
+    super.isFavorite,
     this.currentTrack = 'Blinding Lights',
     this.artist = 'The Weeknd',
     this.isPlaying = false,
