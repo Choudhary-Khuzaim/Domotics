@@ -5,6 +5,7 @@ import '../services/mock_ble_service.dart';
 
 /// Manages BLE scanning state and device connections.
 class BleScanProvider extends ChangeNotifier {
+  bool _isDisposed = false;
   final MockBleService _bleService = MockBleService();
 
   bool _isScanning = false;
@@ -96,7 +97,15 @@ class BleScanProvider extends ChangeNotifier {
 
   @override
   void dispose() {
+    _isDisposed = true;
     _scanSubscription?.cancel();
     super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_isDisposed) {
+      super.notifyListeners();
+    }
   }
 }

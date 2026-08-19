@@ -7,6 +7,8 @@ import 'notification_provider.dart';
 
 /// Provider for managing and executing automated Smart Scenes.
 class SceneProvider extends ChangeNotifier {
+  bool _isDisposed = false;
+
   final List<SmartScene> _scenes = [
     SmartScene(
       id: 'good_night',
@@ -177,5 +179,18 @@ class SceneProvider extends ChangeNotifier {
   void removeScene(String sceneId) {
     _scenes.removeWhere((s) => s.id == sceneId);
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_isDisposed) {
+      super.notifyListeners();
+    }
   }
 }

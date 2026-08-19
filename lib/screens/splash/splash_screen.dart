@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +30,9 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<Offset> _taglineSlide;
   late Animation<double> _progressAnimation;
   late Animation<double> _ringRotation;
+
+  Timer? _progressTimer;
+  Timer? _navigationTimer;
 
   @override
   void initState() {
@@ -125,12 +129,12 @@ class _SplashScreenState extends State<SplashScreen>
     _fadeController.forward();
     _slideController.forward();
 
-    Future.delayed(const Duration(milliseconds: 400), () {
+    _progressTimer = Timer(const Duration(milliseconds: 400), () {
       if (mounted) _progressController.forward();
     });
 
     // Navigate after splash
-    Future.delayed(const Duration(milliseconds: 3200), () {
+    _navigationTimer = Timer(const Duration(milliseconds: 3200), () {
       if (mounted) {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
@@ -155,6 +159,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
+    _progressTimer?.cancel();
+    _navigationTimer?.cancel();
     _pulseController.dispose();
     _fadeController.dispose();
     _slideController.dispose();
