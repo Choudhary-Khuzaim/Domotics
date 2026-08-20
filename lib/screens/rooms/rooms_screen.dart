@@ -80,7 +80,7 @@ class RoomsScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 14,
                   mainAxisSpacing: 14,
-                  childAspectRatio: 1.0,
+                  childAspectRatio: 0.82,
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
@@ -443,13 +443,14 @@ class _RoomCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return GlassCard(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Room icon
           Container(
-            width: 52,
-            height: 52,
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.electricCyan.withOpacity(0.12),
@@ -457,11 +458,11 @@ class _RoomCard extends StatelessWidget {
             child: Icon(
               room.icon,
               color: AppColors.electricCyan,
-              size: 26,
+              size: 22,
             ),
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
 
           Text(
             room.name,
@@ -474,7 +475,7 @@ class _RoomCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
 
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
 
           Text(
             '$deviceCount devices • $activeCount active',
@@ -486,7 +487,7 @@ class _RoomCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
 
           // Actions
           Row(

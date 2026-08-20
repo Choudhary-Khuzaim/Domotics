@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import '../../../../app_theme.dart';
+import '../../../../providers/energy_provider.dart';
+import '../../../../providers/settings_provider.dart';
 
 /// Card showing estimated energy bill cost ($), peak usage time, and budget progress.
 class CostEstimatorCard extends StatelessWidget {
@@ -9,6 +12,10 @@ class CostEstimatorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final settings = context.watch<SettingsProvider>();
+    final energyProvider = context.watch<EnergyProvider>();
+    final totalUsage = energyProvider.totalUsage;
+    final totalCost = totalUsage * settings.energyRate;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -50,7 +57,7 @@ class CostEstimatorCard extends StatelessWidget {
                     color: AppColors.accentGreen.withOpacity(0.15),
                   ),
                   child: const Icon(
-                    Icons.attach_money_rounded,
+                    Icons.electric_bolt_rounded,
                     color: AppColors.accentGreen,
                     size: 22,
                   ),
@@ -67,9 +74,9 @@ class CostEstimatorCard extends StatelessWidget {
                             ),
                       ),
                       const SizedBox(height: 2),
-                      const Text(
-                        'Based on current rate (\$0.15 / kWh)',
-                        style: TextStyle(
+                      Text(
+                        'Based on current rate (${settings.currency} ${settings.energyRate.toStringAsFixed(1)} / kWh)',
+                        style: const TextStyle(
                           fontSize: 12,
                           color: AppColors.darkTextMuted,
                         ),
@@ -77,10 +84,10 @@ class CostEstimatorCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Text(
-                  '\$34.80',
-                  style: TextStyle(
-                    fontSize: 24,
+                Text(
+                  '${settings.currency} ${totalCost.toStringAsFixed(0)}',
+                  style: const TextStyle(
+                    fontSize: 22,
                     fontWeight: FontWeight.w800,
                     color: AppColors.accentGreen,
                   ),

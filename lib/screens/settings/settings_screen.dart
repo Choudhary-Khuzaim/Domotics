@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../app_theme.dart';
 import '../../providers/settings_provider.dart';
@@ -586,7 +587,10 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           FilledButton(
-            onPressed: () => Navigator.pop(ctx),
+            onPressed: () {
+              Navigator.pop(ctx);
+              SystemNavigator.pop();
+            },
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.accentRose,
               shape: RoundedRectangleBorder(
