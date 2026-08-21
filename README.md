@@ -225,7 +225,6 @@ The app simulates a fully functional smart home environment — from controlling
 | **[fl_chart](https://pub.dev/packages/fl_chart)** | Energy Analytics Charts |
 | **[flutter_colorpicker](https://pub.dev/packages/flutter_colorpicker)** | Smart Light Color Controls |
 | **[google_fonts](https://pub.dev/packages/google_fonts)** | Typography (Inter font family) |
-| **[flutter_animate](https://pub.dev/packages/flutter_animate)** | Declarative Micro-animations |
 | **[percent_indicator](https://pub.dev/packages/percent_indicator)** | Circular/Linear Progress Indicators |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

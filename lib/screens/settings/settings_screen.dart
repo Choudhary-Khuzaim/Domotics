@@ -744,7 +744,7 @@ If you have questions about this Privacy Policy, contact us at privacy@domotics.
             ),
             const SizedBox(height: 20),
             _infoRow('Version', 'v${settings.appVersion}', isDark),
-            _infoRow('Build', '2026.08.16', isDark),
+            _infoRow('Build', '2026.08.21', isDark),
             _infoRow('Platform', 'Flutter / Dart', isDark),
             _infoRow('License', 'MIT License', isDark),
             const SizedBox(height: 16),

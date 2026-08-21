@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../app_theme.dart';
 import '../../../providers/theme_provider.dart';
 import '../../../providers/notification_provider.dart';
+import '../../../providers/settings_provider.dart';
 import '../../../widgets/notifications_sheet.dart';
 import 'weather_detail_sheet.dart';
 
@@ -21,6 +22,7 @@ class GreetingHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
     final notificationProvider = context.watch<NotificationProvider>();
+    final settings = context.watch<SettingsProvider>();
     final unreadCount = notificationProvider.unreadCount;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -44,10 +46,12 @@ class GreetingHeader extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Center(
+            child: Center(
               child: Text(
-                'K',
-                style: TextStyle(
+                settings.userName.isNotEmpty
+                    ? settings.userName[0].toUpperCase()
+                    : 'U',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -72,7 +76,7 @@ class GreetingHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Khuzaim 👋',
+                  '${settings.userName} 👋',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontSize: 22,
                   ),

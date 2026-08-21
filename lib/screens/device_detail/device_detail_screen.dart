@@ -10,6 +10,7 @@ import 'widgets/camera_control_widget.dart';
 import 'widgets/fan_control_widget.dart';
 import 'widgets/speaker_control_widget.dart';
 import 'widgets/activity_timeline.dart';
+import 'widgets/schedule_picker.dart';
 
 /// Deep-dive control screen for an individual smart device.
 class DeviceDetailScreen extends StatelessWidget {
@@ -162,9 +163,16 @@ class DeviceDetailScreen extends StatelessWidget {
                   child: _buildDetailControls(context, device, provider),
                 ),
 
-              const SizedBox(height: 28),
+              const SizedBox(height: 24),
 
-              // Activity Timeline
+              // Schedule Picker
+              if (device.isActive)
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: SchedulePicker(),
+                ),
+
+              const SizedBox(height: 28),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
